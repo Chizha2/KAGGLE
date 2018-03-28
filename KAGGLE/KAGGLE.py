@@ -1,5 +1,0 @@
-print('hello, world!')
-print('kek')
-print('cheburek')
-print('lol')
-print('Да, это жоска')
