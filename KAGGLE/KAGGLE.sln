@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "KAGGLE", "KAGGLE.pyproj", "{07E474D4-A7D0-4E89-96BE-D2F258A3EFEF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07E474D4-A7D0-4E89-96BE-D2F258A3EFEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07E474D4-A7D0-4E89-96BE-D2F258A3EFEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {097C523D-946D-4FB4-83D3-E61162239CC6}
+	EndGlobalSection
+EndGlobal
