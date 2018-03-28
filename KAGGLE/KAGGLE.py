@@ -1,5 +1,7 @@
 print('hello, world!')
 print('kek')
 print('cheburek')
+print('sel')
+print('second banch addded')
 print('lol')
 print('Да, это жоска')
