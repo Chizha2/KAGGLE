@@ -3,14 +3,15 @@ from sklearn.preprocessing import LabelEncoder
 le = LabelEncoder()
 
 file = pd.read_csv('../zadanie/train.csv', na_values="NA") # чтение файла
-file_obj = file.select_dtypes(include=['object']).copy() # копируем поля object в новый data set
-
 
 for i in file.head():
-   if(int(file[i].notnull().sum() / len(file) * 100) < 80):
-       del file[i]
+    if int(file[i].notnull().sum() / len(file) * 100) < 80: # рассчитываем коэффициент валидных данных
+        del file[i]
+    else:
+        file[i] = file[i].fillna(file[i].value_counts().idxmax())
 
 
-for i in file.head():
-    print(str(i) + ", " + str(int(file[i].notnull().sum() / len(file) * 100)) + "%") # рассчитываем коэффициент валидных данных
+# file_obj = file.select_dtypes(include=['object']).copy() # копируем поля object в новый data set
 
+for i in file.select_dtypes(include=['object']):
+    if
