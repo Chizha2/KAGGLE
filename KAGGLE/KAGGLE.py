@@ -13,5 +13,12 @@ for i in file.head():
         
 # file_obj = file.select_dtypes(include=['object']).copy() # копируем поля object в новый data set
 
-for i in file.select_dtypes(include=['object']):
-    if 
+for i in file.select_dtypes(include = ['object']):
+    file[i] = file[i].astype('category').cat.codes
+
+print(file["LotShape"])
+
+for i in file.select_dtypes(include = ['object']):
+    file[i] = file[i].cat.codes
+
+print(file["LotShape"])
