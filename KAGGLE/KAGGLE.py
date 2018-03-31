@@ -6,6 +6,9 @@ from collections import defaultdict # для метода словаря
 import warnings # для настройки предупреждений
 warnings.filterwarnings("ignore") # отключение предупреждений
 import matplotlib.pyplot as p # гистограммы
+import statistics
+
+
 d = defaultdict(LabelEncoder) # создание словаря для трансформаций
 
 file = pd.read_csv("../zadanie/train.csv", na_values = "NA") # чтение файла, пустые значения = "NA"
@@ -36,3 +39,10 @@ for i in file["TotalBsmtSF"]: # по столбцу площади
     square.append(i) # добавление в список
 price.sort() # сортировка
 square.sort() # сортировка
+
+p.Figure() # создание фигуры
+p.title("Распределение домов") # заголовок
+p.gcf().canvas.set_window_title("Распределение домов") # название окна
+p.plot(pricelst, label="Цены", color="r") # создание гистограммы цен
+p.plot(spacelst, label="Площадь", color="g") # создание гистограммы цен
+p.show() # отображение фигуры
