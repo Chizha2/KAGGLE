@@ -23,13 +23,13 @@ for i in file.head(): # по столбцам
 file_obj = file.select_dtypes(include = ["object"]) # создаем file_obj, где остаются только объектные столбцы
 file_obj = file_obj.apply(lambda x: d[x.name].fit_transform(x)) # трансформация
 
-for i in file_obj:
-    file[i] = i
+for i in file_obj: # по столбцам объектного файла
+    file[i] = i # копируем изменения в исходный файл
 
 # file_obj = file_obj.apply(lambda x: d[x.name].inverse_transform(x)) обратная трансформация
 
-data = {"50k-": 0, "50k - 100k": 0, "100k - 150k": 0, "150k - 200k": 0, "200k - 250k": 0, "250k - 300k": 0, "300k+": 0}
-for i in file["SalePrice"]:
+data = {"50k-": 0, "50k - 100k": 0, "100k - 150k": 0, "150k - 200k": 0, "200k - 250k": 0, "250k - 300k": 0, "300k+": 0} # словарь для графика
+for i in file["SalePrice"]: # по столбцу цены
     if i < 50000:
         data.update({"50k-": data["50k-"] + 1})
     elif i >= 50000 and i < 100000:
@@ -45,10 +45,10 @@ for i in file["SalePrice"]:
     else:
         data.update({"300k+": data["300k+"] + 1})
 
-p.Figure()
-p.xlabel("Количество")
-p.ylabel("Стоимость") 
-p.title("Распределение домов")
-p.gcf().canvas.set_window_title("Распределение домов")
-p.barh(list(data.keys()), list(data.values()))
-p.show()
+p.Figure() # создание фигуры
+p.xlabel("Количество") # Оx
+p.ylabel("Стоимость") # Oy
+p.title("Распределение домов") # заголовок
+p.gcf().canvas.set_window_title("Распределение домов") # название окна
+p.barh(list(data.keys()), list(data.values())) # создание гистограммы
+p.show() # отображение фигуры
