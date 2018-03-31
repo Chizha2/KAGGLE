@@ -29,7 +29,7 @@ file_obj = file_obj.apply(lambda x: d[x.name].fit_transform(x)) # трансфо
 for i in file_obj: # по столбцам объектного файла
     file[i] = i # копируем изменения в исходный файл
 
-# file_obj = file_obj.apply(lambda x: d[x.name].inverse_transform(x)) обратная трансформация
+#file_obj = file_obj.apply(lambda x: d[x.name].inverse_transform(x)) # обратная трансформация
 
 # data = {"50k-": 0, "50k - 100k": 0, "100k - 150k": 0, "150k - 200k": 0, "200k - 250k": 0, "250k - 300k": 0, "300k+": 0} # словарь для графика
 # for i in file["SalePrice"]: # по столбцу цены
@@ -59,6 +59,10 @@ for i in file_obj: # по столбцам объектного файла
 
 # pricelst Список цен
 # spacelst Список домов
+file_obj.sort_values('SalePrice') # сортировка по цене (по умолчанию, повозрастанию)
+
+pricelst = file_obj['SalePrice'].tolist() # преобразование в спиок
+spacelst = file_obj['GrLivArea'].tolist() # преобразование в спиок
 
 p.Figure() # создание фигуры
 p.title("Распределение домов") # заголовок
