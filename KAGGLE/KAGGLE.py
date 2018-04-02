@@ -1,15 +1,13 @@
 import pandas as pd # для обработки и анализа данных
 import numpy as np # для вычислительных алгоритмов
 from sklearn.preprocessing import LabelEncoder # для трансформаций
-# le = LabelEncoder()                                                                                                                    ЗАЧЕМ?
-from collections import defaultdict # для метода словаря
 import warnings # для настройки предупреждений
-warnings.filterwarnings("ignore") # отключение предупреждений
 import matplotlib.pyplot as p # гистограммы
-import statistics
+from sklearn import preprocessing
+from  sklearn.model_selection  import  train_test_split
+import sklearn.linear_model as lm
 
-d = defaultdict(LabelEncoder) # создание словаря для трансформаций
-
+warnings.filterwarnings("ignore") # отключение предупреждений
 file = pd.read_csv("../zadanie/train.csv", na_values = "NA") # чтение файла, пустые значения = "NA"
 
 for i in file.head(): # по столбцам
@@ -19,31 +17,54 @@ for i in file.head(): # по столбцам
         file[i] = file[i].fillna(file[i].value_counts().idxmax()) # замена всех "NA" столбца на самое популярное значение в нем
 
 # file = file.fillna(method = "pad") замена всех "NA" кастомным способом
-# file_obj = file.select_dtypes(include = ["object"]).copy() копируем поля object в новый data set                                       ЗАЧЕМ?
-# for i in file.select_dtypes(include = ["object"]): по объектным столбцам
-
-file_obj = file.select_dtypes(include = ["object"]) # создаем file_obj, где остаются только объектные столбцы
-file_obj = file_obj.apply(lambda x: d[x.name].fit_transform(x)) # трансформация
-
-for i in file_obj: # по столбцам объектного файла
-    file[i] = i # копируем изменения в исходный файл
-
+# file_obj = file_obj.apply(lambda x: d[x.name].fit_transform(x)) # трансформация
 # file_obj = file_obj.apply(lambda x: d[x.name].inverse_transform(x)) обратная трансформация
 
-price = [] # цены
-square = [] # площади
-result = [] # результат
-for i in file["SalePrice"]: # по столбцу цены
-    price.append(int(i / 100)) # добавление в список
-for i in file["LotArea"]: # по столбцу площади
-    square.append(i) # добавление в список
-price.sort() # сортировка
-square.sort() # сортировка
+file = file.sort_values("SalePrice")
+price = list(file["SalePrice"])
+square = list(file["GrLivArea"])
+result = []
+k = 0
+f = 0
 for i in range(len(price)): # по массивам
-    result.append(price[i] / square[i]) # занесение результата
+    k += 1
+    f += price[i] / square[i] # занесение результата
+    if k % 10 == 0:
+        result.append(f)
+        f = 0
 
 p.Figure() # создание фигуры
 p.title("Цена / площадь") # заголовок
 p.gcf().canvas.set_window_title("Цена / площадь") # название окна
+# x = np.linspace(0, 10, num = 11, endpoint = True)
 p.plot(result, label = "Соотношение", color = "r") # график соотношения
 p.show() # отображение фигуры
+
+le = LabelEncoder()
+for i in file.select_dtypes(include = ["object"]):
+    file[i] = le.fit_transform(file[i])
+
+file = preprocessing.scale(file)
+
+train, test =  train_test_split(file,  train_size = 0.9)
+
+file_2 = []
+kek = []
+for i in range(len(file[0])):
+    for j in range(len(file)):
+        kek.append(file[j][i])
+    file_2.append(kek)
+    kek = []
+file = file_2
+
+x = file[:-1]
+y = file[-1]
+skm = lm.LinearRegression()
+# y = np.array(y)
+# x = np.array(x)
+# y = y.reshape((1460, 1))
+# print(y.shape)
+# print(x.shape)
+# skm.fit(x, y)
+skm.fit(np.transpose(np.matrix(x)), np.transpose(np.matrix(y)))
+print (skm.intercept_, skm.coef_)
