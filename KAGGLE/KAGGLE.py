@@ -3,10 +3,8 @@ from functions import * # импорт функций
 warnings.filterwarnings("ignore") # отключение предупреждений
 file = pd.read_csv("../zadanie/train.csv", na_values = "NA") # чтение файла, пустые значения = "NA"
 file = NA_filter(file) # удаление лишних фич и замена "NA"
-chlst, price2 = graph_data(file)
-graph_print(chlst, price2) # получение данных для графика и его вывод
-price, space = graph_data2(file)
-graph_print2(price, space, chlst, price2) # получение данных для графика и его вывод
+result, price = graph_data(file) # получение данных для графика
+graph_print(result, price) # вывод графика
 code = LabelEncoder() # словарь для кодировки
 file = to_categorial(file, code) # перевод категориальных фич в числовые
 storage = preprocessing.scale(file) # стандартизация данных (перевод в хранилище)
