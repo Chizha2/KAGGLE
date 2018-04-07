@@ -21,14 +21,14 @@ def graph_data(file): # получение данных для графика
         if k % 10 == 0: # условие усреднения
             result.append(f / 10) # добавление результата
             f = 0 # обнуление счетчика
-    k = 0
-    price_2 = []
-    for i in range(len(price)):
-        k += 1
-        f += price[i]
-        if k % 10 == 0:
-            price_2.append(f / 10)
-            f = 0
+    k = 0 # обнуление счетчика
+    price_2 = [] # пустой список для цен
+    for i in range(len(price)): # по строкам
+        k += 1 # увеличить счетчик
+        f += price[i] # изменение промежуточного значения
+        if k % 10 == 0: # каждые 10 элементов
+            price_2.append(f / 10) # поместить в результат
+            f = 0 # обнулить
     return result, price_2 # вернуть данные для графика
 
 def graph_print(result, price_2): # вывод графика
