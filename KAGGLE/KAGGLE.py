@@ -86,7 +86,7 @@ p.ticklabel_format(style='plain')
 p.legend(mode="expand", borderaxespad=0)
 p.show()  # отображение фигуры
 
-p.scatter(y_scaler.inverse_transform(y_test), y_scaler.inverse_transform(predictions))
+p.scatter(y_real, y_predict)
 p.xlabel("True Values")
 p.ylabel("Predictions")
 p.show()
