@@ -42,4 +42,12 @@ def to_categorial(file, code): # перевод категориальных ф�
     for i in file.select_dtypes(include = ["object"]): # по объектным фичам
         file[i] = code.fit_transform(file[i]) # перевод 
     return file # вернуть таблицу
-
+def rmsle(real, predicted):
+    sum=0.0
+    for x in range(len(predicted)):
+        if predicted[x]<0 or real[x]<0: #check for negative values
+            continue
+        p = np.log(predicted[x]+1)
+        r = np.log(real[x]+1)
+        sum = sum + (p - r)**2
+    return (sum/len(predicted))**0.5
