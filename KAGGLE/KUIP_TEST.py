@@ -2,7 +2,9 @@ from imports import * # импорт пакетов и модулей
 from functions import * # импорт функций
 warnings.filterwarnings("ignore") # отключение предупреждений
 
-file = pd.read_csv("../zadanie/train.csv", na_values = "NA") # чтение файла, пустые значения = "NA", kaggke
+splitd = 1
+
+file = pd.read_csv("../zadanie/kuip_train.csv", na_values = "NA") # чтение файла, пустые значения = "NA", kuip
 
 file = NA_filter(file) # удаление лишних фич и замена "NA"
 #result, price = graph_data(file) # получение данных для графика
@@ -11,7 +13,18 @@ code = LabelEncoder() # словарь для кодировки
 file = to_categorial(file, code) # перевод категориальных фич в числовые
 
 
-x_train, x_test, y_train, y_test = train_test_split(file.drop(columns = ['SalePrice']), file['SalePrice'], test_size = 0.25) # разделение на 4 части (2 тестовых и 2 валидационных), kaggle
+if(splitd == 1):
+    x_train, x_test, y_train, y_test = train_test_split(file.drop(columns = ['LUX']), file['LUX'], test_size = 0.40) # разделение на 4 части (2 тестовых и 2 валидационных), kuip
+
+if(splitd == 2):
+    x_train = file.head(280) # прямое разделение массива на 2 дня
+    x_test = file.tail(len(file)-280)
+    y_train = x_train['LUX']
+    y_test = x_test['LUX']
+    x_train = x_train.drop(columns = ['LUX'])
+    x_test = x_test.drop(columns = ['LUX'])
+
+
 
 y_train = y_train.reshape(-1, 1)
 y_test = y_test.reshape(-1, 1)
