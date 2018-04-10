@@ -8,11 +8,12 @@ result, price = graph_data(file) # получение данных для гра
 code = LabelEncoder() # словарь для кодировки
 file = to_categorial(file, code) # перевод категориальных фич в числовые
 
-rmsle_k = 0
-mae_k = 0
-k = 0
-errors = 0
-for i in range(100):
+rmsle_k = 0 # rmsle
+mae_k = 0 # mae
+k = 0 # счетчик
+errors = 0 # ошибки
+
+for i in range(100): # цикл
     model = linear_model.LinearRegression() # создание модели
     x_train, x_test, y_train, y_test = train_test_split(file.drop(columns = ['SalePrice']), file['SalePrice'], test_size = 0.2) # разделение на 4 части (2 тестовых и 2 валидационных)
     y_train = y_train.reshape(-1, 1) # фикс
@@ -22,26 +23,14 @@ for i in range(100):
     x_train = x_scaler.transform(x_train) # скайлирование X тренировки
     y_train = y_scaler.transform(y_train) # скайлирование Y тренировки
     x_test = x_scaler.transform(x_test) # скайлирование X тестирования
-    y_test = y_scaler.transform(y_test) # скайлирование Y тестирования
     model.fit(x_train, y_train) # обучение модели
     predictions = model.predict(x_test) # предположения
-    predictions = y_scaler.inverse_transform(predictions)
-    y_test = y_scaler.inverse_transform(y_test)
-    mae_now = mean_absolute_error(y_test, predictions)
-    print(mae_now)
-    del model
-    if (mae_now < 50000):
-        k += 1
-        rmsle_k += rmsle(y_test, predictions)
-        mae_k += mae_now
-    else:
-        errors += 1
-print("rmsle: ", rmsle_k / k, "mae: ", mae_k / k, "suc_cicles: ", k, "errors: ", errors)
+    predictions = y_scaler.inverse_transform(predictions) # дешифровка предположений
+    if (mean_absolute_error(y_test, predictions) < 50000): # ошибки нет
+        k += 1 # увеличение счетчика
+        rmsle_k += rmsle(y_test, predictions) # rmsle
+        mae_k += mean_absolute_error(y_test, predictions) # mae
+    else: # иначе
+        errors += 1 # + ошибка
 
-# print(y_scaler.inverse_transform(predictions)) # скайлирование предположений в нормальный вид
-# print(y_scaler.inverse_transform(y_test)) # скайлирование идеала в нормальный вид
-# p.plot([0, 800000], [0, 800000], color = "r")
-# p.scatter(y_scaler.inverse_transform(y_test), y_scaler.inverse_transform(predictions)) # точечная диаграмма из скалированных в нормальный вид идеала и предположения
-# p.xlabel("True Values") # по X - идеал
-# p.ylabel("Predictions") # по Y - предсказания
-# p.show() # отобразить
+print("rmsle:", rmsle_k / k, ", mae:", mae_k / k, ", suc_cicles:", k, ", errors:", errors) # вывод
