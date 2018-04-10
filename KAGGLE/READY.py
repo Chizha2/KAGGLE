@@ -1,8 +1,8 @@
 from imports import * # импорт пакетов и модулей
 from functions import * # импорт функций
 warnings.filterwarnings("ignore") # отключение предупреждений
-file = pd.read_csv("../zadanie/train.csv", na_values = "NA") # чтение файла, пустые значения = "NA", kaggle
-file_2 = pd.read_csv("../zadanie/test.csv", na_values = "NA")
+file = pd.read_csv("../zadanie/train.csv", na_values = "NA").drop(columns = ['Id']) # чтение файла, пустые значения = "NA", kaggle
+file_2 = pd.read_csv("../zadanie/test.csv", na_values = "NA").drop(columns = ['Id'])
 file, file_2 = NA_filter(file, file_2) # удаление лишних фич и замена "NA"
 file, file_2 = to_categorial(file, file_2) # перевод категориальных фич в числовые
 
