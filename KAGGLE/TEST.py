@@ -2,13 +2,15 @@ from imports import * # импорт пакетов и модулей
 from functions import * # импорт функций
 warnings.filterwarnings("ignore") # отключение предупреждений
 
-file = pd.read_csv("../zadanie/train.csv", na_values = "NA") # чтение файла, пустые значения = "NA", kaggke
+file = pd.read_csv("../zadanie/train.csv", na_values = "NA") # чтение файла, пустые значения = "NA", kaggle
 
 file = NA_filter(file) # удаление лишних фич и замена "NA"
 #result, price = graph_data(file) # получение данных для графика
 #graph_print(result, price) # вывод графика
 code = LabelEncoder() # словарь для кодировки
 file = to_categorial(file, code) # перевод категориальных фич в числовые
+
+
 
 rmsle_k = 0 # rmsle
 mae_k = 0 # mae

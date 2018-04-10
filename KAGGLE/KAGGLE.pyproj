@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>07e474d4-a7d0-4e89-96be-d2f258a3efef</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>KAGGLE.py</StartupFile>
+    <StartupFile>READY.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -30,7 +30,10 @@
     <Compile Include="imports.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="KAGGLE.py" />
+    <Compile Include="READY.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TEST.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
