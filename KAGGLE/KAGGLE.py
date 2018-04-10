@@ -11,7 +11,7 @@ code = LabelEncoder() # словарь для кодировки
 file = to_categorial(file, code) # перевод категориальных фич в числовые
 
 
-x_train, x_test, y_train, y_test = train_test_split(file.drop(columns = ['SalePrice']), file['SalePrice'], test_size = 0.25) # разделение на 4 части (2 тестовых и 2 валидационных), kaggle
+x_train, x_test, y_train, y_real = train_test_split(file.drop(columns = ['SalePrice']), file['SalePrice'], test_size = 0.25) # разделение на 4 части (2 тестовых и 2 валидационных), kaggle
 
 y_train = y_train.reshape(-1, 1)
 y_test = y_test.reshape(-1, 1)
