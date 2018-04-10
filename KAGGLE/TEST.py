@@ -10,8 +10,6 @@ file = NA_filter(file) # удаление лишних фич и замена "N
 code = LabelEncoder() # словарь для кодировки
 file = to_categorial(file, code) # перевод категориальных фич в числовые
 
-
-
 rmsle_k = 0 # rmsle
 mae_k = 0 # mae
 k = 0 # счетчик
