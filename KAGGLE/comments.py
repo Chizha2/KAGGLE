@@ -47,3 +47,16 @@
 # y_test = y_scaler.transform(y_test) # скайлирование Y тестирования
 # y_test = y_scaler.inverse_transform(y_test) # дешифрока идеала
 # del model
+
+# def rmsle_old(real, predicted): # rmsle
+#     sum = 0.0
+#     for x in range(len(predicted)):
+#        if predicted[x] < 0 or real[x] < 0: #check for negative values
+#            continue
+#        p = np.log(predicted[x] + 1)
+#        r = np.log(real[x] + 1)
+#        sum = sum + (p - r)**2
+#    return (sum / len(predicted))**0.5
+
+# predictions = y_scaler.inverse_transform(predictions) # дешифровка предположений
+# rmsle_k += rmsle_old(y_test, predictions) # rmsle

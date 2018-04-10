@@ -15,7 +15,7 @@ mae_k = 0 # mae
 k = 0 # счетчик
 errors = 0 # ошибки
 
-for i in range(100): # цикл
+for j in range(100): # цикл
     model = linear_model.LinearRegression() # создание модели
     x_train, x_test, y_train, y_test = train_test_split(file.drop(columns = ['SalePrice']), file['SalePrice'], test_size = 0.2) # разделение на 4 части (2 тестовых и 2 валидационных)
     y_train = y_train.reshape(-1, 1) # фикс
@@ -27,7 +27,7 @@ for i in range(100): # цикл
     x_test = x_scaler.transform(x_test) # скайлирование X тестирования
     model.fit(x_train, y_train) # обучение модели
     predictions = model.predict(x_test) # предположения
-    predictions = y_scaler.inverse_transform(predictions) # дешифровка предположений
+    predictions = list(map(lambda x: x * (-1) if x < 0 else x, y_scaler.inverse_transform(predictions))) # дешифровка предположений
     if (mean_absolute_error(y_test, predictions) < 50000): # ошибки нет
         k += 1 # увеличение счетчика
         rmsle_k += rmsle(y_test, predictions) # rmsle

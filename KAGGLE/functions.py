@@ -54,12 +54,7 @@ def to_categorial(file, code): # перевод категориальных ф�
         file[i] = code.fit_transform(file[i]) # перевод 
     return file # вернуть таблицу
 
-def rmsle(real, predicted): # rmsle
-    sum = 0.0
-    for x in range(len(predicted)):
-        if predicted[x] < 0 or real[x] < 0: #check for negative values
-            continue
-        p = np.log(predicted[x] + 1)
-        r = np.log(real[x] + 1)
-        sum = sum + (p - r)**2
-    return (sum / len(predicted))**0.5
+def rmsle(y, y_pred):
+	assert len(y) == len(y_pred)
+	terms_to_sum = [(math.log(y_pred[i] + 1) - math.log(y[i] + 1)) ** 2.0 for i,pred in enumerate(y_pred)]
+	return (sum(terms_to_sum) * (1.0/len(y))) ** 0.5
