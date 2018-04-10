@@ -1,8 +1,14 @@
 from imports import * # импорт пакетов и модулей
 from functions import * # импорт функций
+
+
 warnings.filterwarnings("ignore") # отключение предупреждений
 file = pd.read_csv("../zadanie/train.csv", na_values = "NA").drop(columns = ['Id']) # чтение файла, пустые значения = "NA", kaggle
-file_2 = pd.read_csv("../zadanie/test.csv", na_values = "NA").drop(columns = ['Id'])
+file_2 = pd.read_csv("../zadanie/test.csv", na_values = "NA")
+
+result = file_2['Id']
+file_2 = file_2.drop(columns = ['Id'])
+
 file, file_2 = NA_filter(file, file_2) # удаление лишних фич и замена "NA"
 file, file_2 = to_categorial(file, file_2) # перевод категориальных фич в числовые
 
@@ -26,3 +32,7 @@ p.title("цена") # заголовок графика
 p.gcf().canvas.set_window_title("цена") # название окна
 p.plot(predictions,  color = "r") # график
 p.show() # отображение фигуры
+
+result['SalePrice'] = predictions
+
+result.to_csv("./result.csv", header = list("Id","SalePrice"))
