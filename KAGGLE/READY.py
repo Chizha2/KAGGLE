@@ -5,7 +5,9 @@ file = pd.read_csv("../zadanie/train.csv", na_values = "NA").drop(columns = ['Id
 file_2 = pd.read_csv("../zadanie/test.csv", na_values = "NA")
 
 result = pd.DataFrame()
+
 result['Id'] = file_2['Id']
+
 file_2 = file_2.drop(columns = ['Id'])
 
 file, file_2 = NA_filter(file, file_2) # удаление лишних фич и замена "NA"
@@ -34,9 +36,6 @@ p.plot(predictions,  color = "r") # график
 
 predictions = list(map(lambda x: float(x), predictions)) # перевод предсказаний во float
 
-result['SalePrice'] = pd.Series(predictions) # добавление в результат столбца цен
-
-# result = result.reindex(['Id','SalePrice']) ???
-# print(result) вывод результата
+result['SalePrice'] = predictions
 
 result.to_csv("./result.csv", header = True, index = False) # сохранение

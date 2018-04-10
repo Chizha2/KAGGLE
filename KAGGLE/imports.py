@@ -9,4 +9,5 @@ import warnings # для настройки предупреждений
 from sklearn.preprocessing import StandardScaler # скейлер
 from sklearn import linear_model # модель
 from sklearn.metrics import mean_absolute_error # mae
+from collections import Counter
 import math
