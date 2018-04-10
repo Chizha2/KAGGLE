@@ -10,7 +10,8 @@ model = linear_model.LinearRegression() # создание модели
 x_train = file.drop(columns = ['SalePrice'])
 y_train = file['SalePrice']
 y_train = y_train.reshape(-1, 1) # фикс
-x_scaler = StandardScaler().fit(x_train) # скейлер для X
+fit_pd = pd.merge(x_train, file_2, how="outer")
+x_scaler = StandardScaler().fit(fit_pd) # скейлер для X
 y_scaler = StandardScaler().fit(y_train) # скейлер для Y
 z_test = x_scaler.transform(file_2)
 x_train = x_scaler.transform(x_train) # скайлирование X тренировки
