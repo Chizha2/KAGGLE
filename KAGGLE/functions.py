@@ -38,10 +38,37 @@ def graph_print(result, price_2): # вывод графика
     p.plot(price_2, result, label = "Соотношение", color = "r") # график
     p.show() # отображение фигуры
 
+def graph_print2(real, predict): # вывод графика
+    p.Figure() # создание фигуры
+    p.title("Цена / площадь") # заголовок графика
+    p.gcf().canvas.set_window_title("Цена / площадь") # название окна
+    p.plot(real, label = "real", color = "r", alpha=0.7) # график
+    p.plot(predict, label = "predict", color = "b", alpha=0.7) # график
+    p.ticklabel_format(useOffset=False)
+    p.ticklabel_format(style='plain')
+    p.legend(mode="expand", borderaxespad=0)
+    p.show() # отображение фигуры
+
 def to_categorial(file, code): # перевод категориальных фич в числовые
     for i in file.select_dtypes(include = ["object"]): # по объектным фичам
         file[i] = code.fit_transform(file[i]) # перевод 
     return file # вернуть таблицу
+
+def overturn(storage): # переворот матрицы
+    storage_2 = [] # временное хранилище
+    temp = [] # промежуточный список для переворота
+    for i in range(len(storage[0])): # формирует строки
+        for j in range(len(storage)): # формирует 1 строку
+            temp.append(storage[j][i]) # добавление во временную матрицу
+        storage_2.append(temp) # добавление результата
+        temp = [] # обновление временного списка
+    return storage_2 # вернуть перевёрнутое хранилище
+
+def data_share(storage): # разделение данных
+    x_datas = storage[:-1] # отделение данных
+    y = storage[-1] # отделение цены
+    return x_datas, y # вернуть 2 набора данных
+
 def rmsle(real, predicted):
     sum=0.0
     for x in range(len(predicted)):
