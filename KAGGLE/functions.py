@@ -56,9 +56,10 @@ def graph_print2(real, predict): # вывод графика
 
 def to_categorial(file, file_2): # перевод категориальных фич в числовые
     code = LabelEncoder()  # словарь для кодировки
-    for i in file.select_dtypes(include = ["object"]): # по объектным фичам
-        file[i] = code.fit_transform(file[i]) # перевод
-        file_2[i] = code.transform(file_2[i]) # перевод
+    for i in file.select_dtypes(include=["object"]):  # по объектным фичам
+        file[i] = code.fit_transform(file[i])  # перевод
+        file_2[i] = code.transform(file_2[i])  # перевод
+
     return file, file_2 # вернуть таблицу
 
 def rmsle(y, y_pred):

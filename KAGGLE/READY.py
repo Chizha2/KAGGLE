@@ -38,9 +38,6 @@ p.plot(predictions,  color = "r") # график
 
 predictions = list(map(lambda x: float(x),predictions))
 
-result['SalePrice'] = pd.Series(predictions)
-
-#result = result.reindex(['Id','SalePrice'])
-print(result)
+result['SalePrice'] = predictions
 
 result.to_csv("./result.csv", header = True, index = False)
