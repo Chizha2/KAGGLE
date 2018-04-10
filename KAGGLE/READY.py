@@ -6,7 +6,10 @@ warnings.filterwarnings("ignore") # отключение предупрежде�
 file = pd.read_csv("../zadanie/train.csv", na_values = "NA").drop(columns = ['Id']) # чтение файла, пустые значения = "NA", kaggle
 file_2 = pd.read_csv("../zadanie/test.csv", na_values = "NA")
 
-result = file_2['Id']
+result = pd.DataFrame()
+
+result['Id'] = file_2['Id']
+
 file_2 = file_2.drop(columns = ['Id'])
 
 file, file_2 = NA_filter(file, file_2) # удаление лишних фич и замена "NA"
@@ -31,8 +34,13 @@ p.Figure() # создание фигуры
 p.title("цена") # заголовок графика
 p.gcf().canvas.set_window_title("цена") # название окна
 p.plot(predictions,  color = "r") # график
-p.show() # отображение фигуры
+#p.show() # отображение фигуры
 
-result['SalePrice'] = predictions
+predictions = list(map(lambda x: float(x),predictions))
 
-result.to_csv("./result.csv", header = list("Id","SalePrice"))
+result['SalePrice'] = pd.Series(predictions)
+
+#result = result.reindex(['Id','SalePrice'])
+print(result)
+
+result.to_csv("./result.csv", header = True, index = False)
