@@ -16,6 +16,7 @@ x_train, x_test, y_train, y_real = train_test_split(file.drop(columns = ['SalePr
 y_train = y_train.reshape(-1, 1)
 y_test = y_test.reshape(-1, 1)
 
+
 from sklearn.preprocessing import StandardScaler
 
 x_scaler = StandardScaler().fit(x_train) #Настройка для входных данны
