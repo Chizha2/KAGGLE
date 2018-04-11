@@ -2,7 +2,7 @@ from imports import * # импорт пакетов и модулей
 from functions import * # импорт функций
 warnings.filterwarnings("ignore") # отключение предупреждений
 
-splitd = 1
+splitd = 2
 
 file = pd.read_csv("../zadanie/kuip_train.csv", na_values = "NA") # чтение файла, пустые значения = "NA", kuip
 
@@ -33,8 +33,7 @@ y_scaler = StandardScaler().fit(y_train) #настройка для резуль
 x_train = x_scaler.transform(x_train) # преобразование обучающих входных данны
 y_train = y_scaler.transform(y_train) # преобразование обучающих результирующих данных
 x_test = x_scaler.transform(x_test) # преобразование тестовых входных данны
-
-y_test = list(y_test)
+y_test = list(y_test) # преобразование в лист
 
 model = linear_model.LinearRegression() # Создание модели линейной регрессии
 model.fit(x_train, y_train) # Обучение модели
@@ -44,7 +43,6 @@ modelsgd.fit(x_train, y_train) # Обучение модели
 
 
 print("Linear")
-
 y_predict = y_scaler.inverse_transform(model.predict(x_test)) # Предсказание для линейной модели и инвертирование трансформации
 y_predict = list(map(lambda x: x * (-1) if x < 0 else x, y_predict)) # дешифровка предположений
 
@@ -54,7 +52,6 @@ print(mae_linear) # вывод MAE
 print(rmsle_linear) # вывод RMSLE
 
 print("SGD")
-
 y_predict_sgd = y_scaler.inverse_transform(modelsgd.predict(x_test)) # Предсказание для SGD модели и инвертирование трансформации
 y_predict_sgd = list(map(lambda x: x * (-1) if x < 0 else x, y_predict_sgd)) # дешифровка предположений
 mae_sgd=int(mean_absolute_error(y_test, y_predict_sgd)) # Расчёт MAE
