@@ -2,7 +2,7 @@ from imports import * # импорт пакетов и модулей
 from functions import * # импорт функций
 warnings.filterwarnings("ignore") # отключение предупреждений
 
-splitd = 1
+splitd = 2
 
 file = pd.read_csv("../zadanie/kuip_train.csv", na_values = "NA") # чтение файла, пустые значения = "NA", kuip
 
@@ -24,7 +24,7 @@ if(splitd == 2):
     x_test = x_test.drop(columns = ['LUX'])
 
 
-
+    
 y_train = y_train.reshape(-1, 1)
 
 from sklearn.preprocessing import StandardScaler
@@ -49,7 +49,7 @@ modelsgd.fit(x_train, y_train) # Обучение модели
 y_predict = y_scaler.inverse_transform(model.predict(x_test)) # Предсказание и инвертирование трансформации
 y_predict = list(map(lambda x: x * (-1) if x < 0 else x, y_scaler.inverse_transform(y_predict))) # дешифровка предположений
 
-y_real = y_test # Инвертирование трансформации, валидационных данных, НУЖНО ЛИ?
+y_real = list(y_test) # Инвертирование трансформации, валидационных данных, НУЖНО ЛИ?
 
 from sklearn.metrics import mean_absolute_error
 print("Linear")

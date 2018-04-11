@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>07e474d4-a7d0-4e89-96be-d2f258a3efef</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>READY.py</StartupFile>
+    <StartupFile>KUIP_TEST.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -30,6 +30,7 @@
     <Compile Include="imports.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="KUIP_TEST.py" />
     <Compile Include="READY.py">
       <SubType>Code</SubType>
     </Compile>

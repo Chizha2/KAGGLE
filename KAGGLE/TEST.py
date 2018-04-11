@@ -44,7 +44,8 @@ for j in range(100): # цикл
         x_test = x_test.drop(columns = [y_col_name]) # оставляем только x части
     
     y_train = y_train.reshape(-1, 1) # фикс
-    y_test = y_test.reshape(-1, 1) # фикс
+    y_test = list(y_test)
+
     x_scaler = StandardScaler().fit(x_train) # скейлер для X
     y_scaler = StandardScaler().fit(y_train) # скейлер для Y
     x_train = x_scaler.transform(x_train) # скайлирование X тренировки
