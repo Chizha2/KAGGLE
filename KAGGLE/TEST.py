@@ -14,7 +14,7 @@ elif(data_code == 2): # в случае выбора набора KUIP
 else:
     exit() # в остальных случаях
     
-print(" 1.train_test_split\n 2.пополам\n") # даём пользователю выбрать
+print(" 1.train_test_split\n 2.Пополам\n") # даём пользователю выбрать
 splitd = int(input("Выберите тип разделения:")) # Выбор типа разделения
 
 file = NA_filter(file, y_name = y_col_name) # удаление лишних фич и замена "NA"

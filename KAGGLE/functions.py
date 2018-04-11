@@ -4,39 +4,34 @@ def NA_filter(train, test = None, y_name = "SalePrice"): # удаление ли
     for i in train.drop(columns = [y_name]).head(): # по фичам без SalePrice
         if int(train[i].notnull().sum() / len(train) * 100) < 80: # если > 80% "NA" в файле train
             del train[i] # удаление фичи
-            del test[i] # удаление фичи
-        elif int(test[i].notnull().sum() / len(test) * 100) < 80: # если > 80% "NA" в файле test
+            if test != None:
+                del test[i] # удаление фичи
+        elif test != None and int(test[i].notnull().sum() / len(test) * 100) < 80 : # если > 80% "NA" в файле test
             del train[i] # удаление фичи
             del test[i] # удаление фичи
         else: # иначе
             train[i] = train[i].fillna(train[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
-            test[i] = test[i].fillna(test[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
-    return train, test # вернуть таблицы
+            if test != None:
+                test[i] = test[i].fillna(test[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
+    if(test != None):
+        return train, test # вернуть таблицы
+    
+    return train # вернуть таблицы
 
 def to_categorial(train, test = None): # перевод категориальных фич в числовые
     encoder = LabelEncoder()  # словарь для кодировки
     for i in train.select_dtypes(include = ["object"]):  # по объектным фичам
         train[i] = encoder.fit_transform(train[i]) # обучение и преобразование
-        test[i] = encoder.transform(test[i]) # преобразование
-    return train, test # вернуть таблицы
+        if test != None:
+            test[i] = encoder.transform(test[i]) # преобразование
+    if(test != None):
+        return train, test # вернуть таблицы
+    
+    return train # вернуть таблицы
 
 
 
 # используется только в TEST.py:
-
-# def NA_filter(file): # удаление лишних фич и замена "NA"
-#    for i in file.head(): # по фичам
-#        if int(file[i].notnull().sum() / len(file) * 100) < 80: # если > 80% "NA"
-#            del file[i] # удаление фичи
-#        else: # иначе
-#            file[i] = file[i].fillna(file[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
-#    return file # вернуть таблицу
-
-# def to_categorial(file): # перевод категориальных фич в числовые
-#    code = LabelEncoder()  # словарь для кодировки
-#    for i in file.select_dtypes(include=["object"]):  # по объектным фичам
-#        file[i] = code.fit_transform(file[i])  # перевод
-#    return file # вернуть таблицу
 
 def graph_data(train): # получение данных для графика
     train = train.sort_values("SalePrice") # сортировка по цене

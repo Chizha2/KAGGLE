@@ -6,11 +6,10 @@ splitd = 1
 
 file = pd.read_csv("../zadanie/kuip_train.csv", na_values = "NA") # чтение файла, пустые значения = "NA", kuip
 
-file = NA_filter(file) # удаление лишних фич и замена "NA"
+file = NA_filter(file, y_name = 'LUX') # удаление лишних фич и замена "NA"
 #result, price = graph_data(file) # получение данных для графика
 #graph_print(result, price) # вывод графика
-code = LabelEncoder() # словарь для кодировки
-file = to_categorial(file, code) # перевод категориальных фич в числовые
+file = to_categorial(file) # перевод категориальных фич в числовые
 
 
 if(splitd == 1):
@@ -27,7 +26,6 @@ if(splitd == 2):
 
 
 y_train = y_train.reshape(-1, 1)
-y_test = y_test.reshape(-1, 1)
 
 from sklearn.preprocessing import StandardScaler
 
@@ -49,11 +47,13 @@ modelsgd.fit(x_train, y_train) # Обучение модели
 
 
 y_predict = y_scaler.inverse_transform(model.predict(x_test)) # Предсказание и инвертирование трансформации
+y_predict = list(map(lambda x: x * (-1) if x < 0 else x, y_scaler.inverse_transform(y_predict))) # дешифровка предположений
 
-# y_real = y_scaler.inverse_transform(y_test) # Инвертирование трансформации, валидационных данных, НУЖНО ЛИ?
+y_real = y_test # Инвертирование трансформации, валидационных данных, НУЖНО ЛИ?
 
 from sklearn.metrics import mean_absolute_error
 print("Linear")
+
 mae_linear=int(mean_absolute_error(y_real, y_predict)) # Расчёт MAE
 rmsle_linear = rmsle(y_real, y_predict) # Расчёт RMSLE
 print(mae_linear)
@@ -61,6 +61,7 @@ print(rmsle_linear)
 
 print("SGD")
 y_predict_sgd = y_scaler.inverse_transform(modelsgd.predict(x_test)) # Предсказание и инвертирование трансформации
+y_predict_sgd = list(map(lambda x: x * (-1) if x < 0 else x, y_scaler.inverse_transform(y_predict_sgd))) # дешифровка предположений
 mae_sgd=int(mean_absolute_error(y_real, y_predict_sgd)) # Расчёт MAE
 rmsle_sgd = rmsle(y_real, y_predict_sgd) # Расчёт RMSLE
 print(mae_sgd)

@@ -65,3 +65,17 @@
 # from collections import Counter
 # import sklearn.linear_model as lm
 # from sklearn import preprocessing
+
+# def NA_filter(file): # удаление лишних фич и замена "NA"
+#    for i in file.head(): # по фичам
+#        if int(file[i].notnull().sum() / len(file) * 100) < 80: # если > 80% "NA"
+#            del file[i] # удаление фичи
+#        else: # иначе
+#            file[i] = file[i].fillna(file[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
+#    return file # вернуть таблицу
+
+# def to_categorial(file): # перевод категориальных фич в числовые
+#    code = LabelEncoder()  # словарь для кодировки
+#    for i in file.select_dtypes(include=["object"]):  # по объектным фичам
+#        file[i] = code.fit_transform(file[i])  # перевод
+#    return file # вернуть таблицу
