@@ -1,22 +1,33 @@
 from imports import * # импорт пакетов и модулей
 
-def NA_filter(file, file_2): # удаление лишних фич и замена "NA"
-    for i in file.drop(columns = ['SalePrice']).head(): # по фичам
-        if int(file[i].notnull().sum() / len(file) * 100) < 80: # если > 80% "NA"
-            del file[i] # удаление фичи
-            del file_2[i]
-        elif int(file_2[i].notnull().sum() / len(file_2) * 100) < 80: # если > 80% "NA"
-            del file[i] # удаление фичи
-            del file_2[i]
+def NA_filter(train, test): # удаление лишних фич и замена "NA"
+    for i in train.drop(columns = ['SalePrice']).head(): # по фичам без SalePrice
+        if int(train[i].notnull().sum() / len(train) * 100) < 80: # если > 80% "NA" в файле train
+            del train[i] # удаление фичи
+            del test[i] # удаление фичи
+        elif int(test[i].notnull().sum() / len(test) * 100) < 80: # если > 80% "NA" в файле test
+            del train[i] # удаление фичи
+            del test[i] # удаление фичи
         else: # иначе
-            file_2[i] = file_2[i].fillna(file_2[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
-            file[i] = file[i].fillna(file[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
-    return file, file_2 # вернуть таблицу
+            train[i] = train[i].fillna(train[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
+            test[i] = test[i].fillna(test[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
+    return train, test # вернуть таблицы
 
-def graph_data(file): # получение данных для графика
-    file = file.sort_values("SalePrice") # сортировка по цене
-    price = list(file["SalePrice"]) # массив цен
-    square = list(file["GrLivArea"]) # массив площадей
+def to_categorial(train, test): # перевод категориальных фич в числовые
+    encoder = LabelEncoder()  # словарь для кодировки
+    for i in train.select_dtypes(include = ["object"]):  # по объектным фичам
+        train[i] = encoder.fit_transform(train[i]) # обучение и преобразование
+        test[i] = encoder.transform(test[i]) # преобразование
+    return train, test # вернуть таблицы
+
+
+
+# используется только в TEST.py:
+
+def graph_data(train): # получение данных для графика
+    train = train.sort_values("SalePrice") # сортировка по цене
+    price = list(train["SalePrice"]) # массив цен
+    square = list(train["GrLivArea"]) # массив площадей
     result = [] # результирующий массив
     k = 0 # счетчик 1
     f = 0 # счетчик 2
@@ -54,15 +65,7 @@ def graph_print2(real, predict): # вывод графика
     p.legend(mode="expand", borderaxespad=0)
     p.show() # отображение фигуры
 
-def to_categorial(file, file_2): # перевод категориальных фич в числовые
-    code = LabelEncoder()  # словарь для кодировки
-    for i in file.select_dtypes(include=["object"]):  # по объектным фичам
-        file[i] = code.fit_transform(file[i])  # перевод
-        file_2[i] = code.transform(file_2[i])  # перевод
-
-    return file, file_2 # вернуть таблицу
-
-def rmsle(y, y_pred):
+def rmsle(y, y_pred): # rmsle
 	assert len(y) == len(y_pred)
 	terms_to_sum = [(math.log(y_pred[i] + 1) - math.log(y[i] + 1)) ** 2.0 for i,pred in enumerate(y_pred)]
 	return (sum(terms_to_sum) * (1.0/len(y))) ** 0.5

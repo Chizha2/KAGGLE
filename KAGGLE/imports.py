@@ -1,13 +1,15 @@
-import pandas as pd # для обработки и анализа данных
-import numpy as np # для вычислительных алгоритмов
-import matplotlib.pyplot as p # гистограммы
-from sklearn import preprocessing # для модели
-from sklearn.preprocessing import LabelEncoder # для трансформаций
-from sklearn.model_selection import train_test_split # для разделение на обучающую и валидационную
-import sklearn.linear_model as lm # для модели
-import warnings # для настройки предупреждений
-from sklearn.preprocessing import StandardScaler # скейлер
+import pandas as pd # обработка и анализ данных
+import numpy as np # вычислительные алгоритмы
+from sklearn.preprocessing import LabelEncoder # перевод категориальных в числовые
+from sklearn.preprocessing import StandardScaler # скейлеры
 from sklearn import linear_model # модель
+import matplotlib.pyplot as p # графики
+import warnings # настройка предупреждений
+
+
+
+# используется только в TEST.py:
+
 from sklearn.metrics import mean_absolute_error # mae
-from collections import Counter
-import math
+from sklearn.model_selection import train_test_split # разделение на обучающую и валидационную
+import math # rmsle

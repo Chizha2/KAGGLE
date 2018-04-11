@@ -44,11 +44,11 @@
 # p.ylabel("Predictions") по Y - предсказания
 # p.show() отобразить
 
-# y_test = y_scaler.transform(y_test) # скайлирование Y тестирования
-# y_test = y_scaler.inverse_transform(y_test) # дешифрока идеала
+# y_test = y_scaler.transform(y_test) скайлирование Y тестирования
+# y_test = y_scaler.inverse_transform(y_test) дешифрока идеала
 # del model
 
-# def rmsle_old(real, predicted): # rmsle
+# def rmsle_old(real, predicted): rmsle
 #     sum = 0.0
 #     for x in range(len(predicted)):
 #        if predicted[x] < 0 or real[x] < 0: #check for negative values
@@ -58,5 +58,10 @@
 #        sum = sum + (p - r)**2
 #    return (sum / len(predicted))**0.5
 
-# predictions = y_scaler.inverse_transform(predictions) # дешифровка предположений
-# rmsle_k += rmsle_old(y_test, predictions) # rmsle
+# predictions = y_scaler.inverse_transform(predictions) дешифровка предположений
+# rmsle_k += rmsle_old(y_test, predictions) rmsle
+
+# , kaggle
+# from collections import Counter
+# import sklearn.linear_model as lm
+# from sklearn import preprocessing

@@ -1,41 +1,42 @@
 from imports import * # импорт пакетов и модулей
 from functions import * # импорт функций
 warnings.filterwarnings("ignore") # отключение предупреждений
-file = pd.read_csv("../zadanie/train.csv", na_values = "NA").drop(columns = ['Id']) # чтение файла, пустые значения = "NA", kaggle
-file_2 = pd.read_csv("../zadanie/test.csv", na_values = "NA")
 
-result = pd.DataFrame()
+train = pd.read_csv("../zadanie/train.csv", na_values = "NA").drop(columns = ['Id']) # чтение train файла, пустые значения = "NA", удаление Id
+test = pd.read_csv("../zadanie/test.csv", na_values = "NA") # чтение test файла, пустые значения = "NA"
+result = pd.DataFrame() # таблица для результата
+result['Id'] = test['Id'] # копирование Id из test файла в result файл
+test = test.drop(columns = ['Id']) # удаление Id из test файла
 
-result['Id'] = file_2['Id']
-
-file_2 = file_2.drop(columns = ['Id'])
-
-file, file_2 = NA_filter(file, file_2) # удаление лишних фич и замена "NA"
-file, file_2 = to_categorial(file, file_2) # перевод категориальных фич в числовые
+train, test = NA_filter(train, test) # удаление лишних фич и замена "NA"
+train, test = to_categorial(train, test) # перевод категориальных фич в числовые
 
 model = linear_model.LinearRegression() # создание модели
-x_train = file.drop(columns = ['SalePrice'])
-y_train = file['SalePrice']
-y_train = y_train.reshape(-1, 1) # фикс
-fit_pd = pd.merge(x_train, file_2, how = "outer") # склейка таблиц
-x_scaler = StandardScaler().fit(fit_pd) # скейлер для X
-y_scaler = StandardScaler().fit(y_train) # скейлер для Y
-z_test = x_scaler.transform(file_2)
-x_train = x_scaler.transform(x_train) # скайлирование X тренировки
-y_train = y_scaler.transform(y_train) # скайлирование Y тренировки
-model.fit(x_train, y_train) # обучение модели
+train_options = train.drop(columns = ['SalePrice']) # обучающие параметры
+train_result = train['SalePrice'] # обучающий результат
+train_result = train_result.reshape(-1, 1) # переворот
 
-predictions = model.predict(z_test) # предположения
-predictions = list(map(lambda x: x * (-1) if x < 0 else x, y_scaler.inverse_transform(predictions))) # дешифровка предположений
+fit_pd = pd.merge(train_options, test, how = "outer") # склейка таблиц
+scaler_options = StandardScaler().fit(fit_pd) # обучение скейлера по параметрам
+scaler_result = StandardScaler().fit(train_result) # обучение скейлера по результату
+test_options = scaler_options.transform(test) # преобразование параметров файла test
+train_options = scaler_options.transform(train_options) # преобразование параметров файла train
+train_result = scaler_result.transform(train_result) # преобразование результата файла train
 
-p.Figure() # создание фигуры для проперки адекватности
-p.title("цена") # заголовок графика
-p.gcf().canvas.set_window_title("цена") # название окна
-p.plot(predictions,  color = "r") # график
-# p.show() отображение фигуры
+model.fit(train_options, train_result) # обучение модели
+test_result = model.predict(test_options) # предположения
+test_result = list(map(lambda x: x * (-1) if x < 0 else x, scaler_result.inverse_transform(test_result))) # дешифровка предположений, модуль на отрицательные
 
-predictions = list(map(lambda x: float(x), predictions)) # перевод предсказаний во float
+answer = "нет" # предустановленный ответ
+while (answer != "да"): # цикл проверки
+    p.Figure() # создание фигуры для проверки адекватности
+    p.title("Предсказанные цены") # заголовок графика
+    p.gcf().canvas.set_window_title("Предсказанные цены") # название окна
+    p.plot(test_result) # график
+    p.show() # отображение фигуры
+    print("Модель корректна?") # сообщение
+    answer = input() # ввод пользователя
 
-result['SalePrice'] = predictions
-
-result.to_csv("./result.csv", header = True, index = False) # сохранение
+test_result = list(map(lambda x: float(x), test_result)) # перевод предсказаний во float
+result['SalePrice'] = test_result # добавление в результат столбца с предсказанными ценами
+result.to_csv("./result.csv", header = True, index = False) # сохранение результата
