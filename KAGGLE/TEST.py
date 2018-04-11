@@ -17,7 +17,7 @@ else:
 print(" 1.train_test_split\n 2.пополам\n")
 splitd = int(input("Выберите тип разделения:"))
 
-file = NA_filter(file, y_col_name) # удаление лишних фич и замена "NA"
+file = NA_filter(file, y_name = y_col_name) # удаление лишних фич и замена "NA"
 # result, price = graph_data(file) # получение данных для графика
 # graph_print(result, price) # вывод графика
 code = LabelEncoder() # словарь для кодировки

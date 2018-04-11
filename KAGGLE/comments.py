@@ -19,20 +19,20 @@
 # model.fit(np.transpose(np.matrix(x_datas)), np.transpose(np.matrix(y))) обучение модели
 # print(model.intercept_, model.coef_) вывод параметров модели
 
-#def overturn(storage): переворот матрицы
-#    storage_2 = [] временное хранилище
-#    temp = [] промежуточный список для переворота
-#    for i in range(len(storage[0])): формирует строки
-#        for j in range(len(storage)): формирует 1 строку
-#            temp.append(storage[j][i]) добавление во временную матрицу
-#        storage_2.append(temp) добавление результата
-#        temp = [] обновление временного списка
-#    return storage_2 вернуть перевёрнутое хранилище
+# def overturn(storage): переворот матрицы
+#     storage_2 = [] временное хранилище
+#     temp = [] промежуточный список для переворота
+#     for i in range(len(storage[0])): формирует строки
+#         for j in range(len(storage)): формирует 1 строку
+#             temp.append(storage[j][i]) добавление во временную матрицу
+#         storage_2.append(temp) добавление результата
+#         temp = [] обновление временного списка
+#     return storage_2 вернуть перевёрнутое хранилище
 
 # def data_share(storage): разделение данных
-#    x_datas = storage[:-1] отделение данных
-#    y = storage[-1] отделение цены
-#    return x_datas, y вернуть 2 набора данных
+#     x_datas = storage[:-1] отделение данных
+#     y = storage[-1] отделение цены
+#     return x_datas, y вернуть 2 набора данных
 
 # print(rmsle(y_test, predictions)) кегл
 
@@ -51,12 +51,12 @@
 # def rmsle_old(real, predicted): rmsle
 #     sum = 0.0
 #     for x in range(len(predicted)):
-#        if predicted[x] < 0 or real[x] < 0: #check for negative values
-#            continue
-#        p = np.log(predicted[x] + 1)
-#        r = np.log(real[x] + 1)
-#        sum = sum + (p - r)**2
-#    return (sum / len(predicted))**0.5
+#         if predicted[x] < 0 or real[x] < 0: #check for negative values
+#             continue
+#         p = np.log(predicted[x] + 1)
+#         r = np.log(real[x] + 1)
+#         sum = sum + (p - r)**2
+#     return (sum / len(predicted))**0.5
 
 # predictions = y_scaler.inverse_transform(predictions) дешифровка предположений
 # rmsle_k += rmsle_old(y_test, predictions) rmsle

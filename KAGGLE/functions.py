@@ -1,6 +1,6 @@
 from imports import * # импорт пакетов и модулей
 
-def NA_filter(train, test, y_name): # удаление лишних фич и замена "NA"
+def NA_filter(train, test = None, y_name = "SalePrice"): # удаление лишних фич и замена "NA"
     for i in train.drop(columns = [y_name]).head(): # по фичам без SalePrice
         if int(train[i].notnull().sum() / len(train) * 100) < 80: # если > 80% "NA" в файле train
             del train[i] # удаление фичи
@@ -13,7 +13,7 @@ def NA_filter(train, test, y_name): # удаление лишних фич и з
             test[i] = test[i].fillna(test[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
     return train, test # вернуть таблицы
 
-def to_categorial(train, test): # перевод категориальных фич в числовые
+def to_categorial(train, test = None): # перевод категориальных фич в числовые
     encoder = LabelEncoder()  # словарь для кодировки
     for i in train.select_dtypes(include = ["object"]):  # по объектным фичам
         train[i] = encoder.fit_transform(train[i]) # обучение и преобразование
@@ -24,13 +24,19 @@ def to_categorial(train, test): # перевод категориальных ф
 
 # используется только в TEST.py:
 
-def NA_filter(file): # удаление лишних фич и замена "NA"
-    for i in file.head(): # по фичам
-        if int(file[i].notnull().sum() / len(file) * 100) < 80: # если > 80% "NA"
-            del file[i] # удаление фичи
-        else: # иначе
-            file[i] = file[i].fillna(file[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
-    return file # вернуть таблицу
+# def NA_filter(file): # удаление лишних фич и замена "NA"
+#    for i in file.head(): # по фичам
+#        if int(file[i].notnull().sum() / len(file) * 100) < 80: # если > 80% "NA"
+#            del file[i] # удаление фичи
+#        else: # иначе
+#            file[i] = file[i].fillna(file[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
+#    return file # вернуть таблицу
+
+# def to_categorial(file): # перевод категориальных фич в числовые
+#    code = LabelEncoder()  # словарь для кодировки
+#    for i in file.select_dtypes(include=["object"]):  # по объектным фичам
+#        file[i] = code.fit_transform(file[i])  # перевод
+#    return file # вернуть таблицу
 
 def graph_data(train): # получение данных для графика
     train = train.sort_values("SalePrice") # сортировка по цене
@@ -72,13 +78,6 @@ def graph_print2(real, predict): # вывод графика
     p.ticklabel_format(style='plain')
     p.legend(mode="expand", borderaxespad=0)
     p.show() # отображение фигуры
-
-def to_categorial(file): # перевод категориальных фич в числовые
-    code = LabelEncoder()  # словарь для кодировки
-    for i in file.select_dtypes(include=["object"]):  # по объектным фичам
-        file[i] = code.fit_transform(file[i])  # перевод
-
-    return file # вернуть таблицу
 
 def rmsle(y, y_pred):
 	assert len(y) == len(y_pred)
