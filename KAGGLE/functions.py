@@ -1,7 +1,7 @@
 from imports import * # импорт пакетов и модулей
 
-def NA_filter(train, test): # удаление лишних фич и замена "NA"
-    for i in train.drop(columns = ['SalePrice']).head(): # по фичам без SalePrice
+def NA_filter(train, test, y_name): # удаление лишних фич и замена "NA"
+    for i in train.drop(columns = [y_name]).head(): # по фичам без SalePrice
         if int(train[i].notnull().sum() / len(train) * 100) < 80: # если > 80% "NA" в файле train
             del train[i] # удаление фичи
             del test[i] # удаление фичи
@@ -23,7 +23,13 @@ def to_categorial(train, test): # перевод категориальных ф
 
 
 # используется только в TEST.py:
-
+def NA_filter(file): # удаление лишних фич и замена "NA"
+    for i in file.head(): # по фичам
+        if int(file[i].notnull().sum() / len(file) * 100) < 80: # если > 80% "NA"
+            del file[i] # удаление фичи
+        else: # иначе
+            file[i] = file[i].fillna(file[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
+    return file # вернуть таблицу
 def graph_data(train): # получение данных для графика
     train = train.sort_values("SalePrice") # сортировка по цене
     price = list(train["SalePrice"]) # массив цен
@@ -65,7 +71,15 @@ def graph_print2(real, predict): # вывод графика
     p.legend(mode="expand", borderaxespad=0)
     p.show() # отображение фигуры
 
-def rmsle(y, y_pred): # rmsle
+def to_categorial(file): # перевод категориальных фич в числовые
+    code = LabelEncoder()  # словарь для кодировки
+    for i in file.select_dtypes(include=["object"]):  # по объектным фичам
+        file[i] = code.fit_transform(file[i])  # перевод
+
+    return file # вернуть таблицу
+
+
+def rmsle(y, y_pred):
 	assert len(y) == len(y_pred)
 	terms_to_sum = [(math.log(y_pred[i] + 1) - math.log(y[i] + 1)) ** 2.0 for i,pred in enumerate(y_pred)]
 	return (sum(terms_to_sum) * (1.0/len(y))) ** 0.5
