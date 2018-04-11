@@ -1,7 +1,7 @@
 from imports import * # импорт пакетов и модулей
 
-def NA_filter(file, file_2): # удаление лишних фич и замена "NA"
-    for i in file.drop(columns = ['SalePrice']).head(): # по фичам
+def NA_filter(file, file_2, y_name): # удаление лишних фич и замена "NA"
+    for i in file.drop(columns = [y_name]).head(): # по фичам
         if int(file[i].notnull().sum() / len(file) * 100) < 80: # если > 80% "NA"
             del file[i] # удаление фичи
             del file_2[i]
@@ -12,6 +12,14 @@ def NA_filter(file, file_2): # удаление лишних фич и заме�
             file_2[i] = file_2[i].fillna(file_2[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
             file[i] = file[i].fillna(file[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
     return file, file_2 # вернуть таблицу
+
+def NA_filter(file): # удаление лишних фич и замена "NA"
+    for i in file.head(): # по фичам
+        if int(file[i].notnull().sum() / len(file) * 100) < 80: # если > 80% "NA"
+            del file[i] # удаление фичи
+        else: # иначе
+            file[i] = file[i].fillna(file[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
+    return file # вернуть таблицу
 
 def graph_data(file): # получение данных для графика
     file = file.sort_values("SalePrice") # сортировка по цене
@@ -61,6 +69,13 @@ def to_categorial(file, file_2): # перевод категориальных �
         file_2[i] = code.transform(file_2[i])  # перевод
 
     return file, file_2 # вернуть таблицу
+
+def to_categorial(file): # перевод категориальных фич в числовые
+    code = LabelEncoder()  # словарь для кодировки
+    for i in file.select_dtypes(include=["object"]):  # по объектным фичам
+        file[i] = code.fit_transform(file[i])  # перевод
+
+    return file # вернуть таблицу
 
 def rmsle(y, y_pred):
 	assert len(y) == len(y_pred)
