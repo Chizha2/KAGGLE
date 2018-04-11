@@ -37,7 +37,7 @@ y_scaler = StandardScaler().fit(y_train) #настройка для резуль
 x_train = x_scaler.transform(x_train) # преобразование обучающих входных данны
 y_train = y_scaler.transform(y_train) # преобразование обучающих результирующих данных
 x_test = x_scaler.transform(x_test) # преобразование тестовых входных данны
-#y_test = y_scaler.transform(y_test) # преобразование тестовых результирующих данных
+# y_test = y_scaler.transform(y_test) # преобразование тестовых результирующих данных
 
 from sklearn import linear_model
 
@@ -50,7 +50,7 @@ modelsgd.fit(x_train, y_train) # Обучение модели
 
 y_predict = y_scaler.inverse_transform(model.predict(x_test)) # Предсказание и инвертирование трансформации
 
-#y_real = y_scaler.inverse_transform(y_test) # Инвертирование трансформации, валидационных данных, НУЖНО ЛИ?
+# y_real = y_scaler.inverse_transform(y_test) # Инвертирование трансформации, валидационных данных, НУЖНО ЛИ?
 
 from sklearn.metrics import mean_absolute_error
 print("Linear")
@@ -66,16 +66,16 @@ rmsle_sgd = rmsle(y_real, y_predict_sgd) # Расчёт RMSLE
 print(mae_sgd)
 print(rmsle_sgd)
 
-p.Figure()  # создание фигуры
-p.title("Сравнение типов регрессий")  # заголовок графика
-p.gcf().canvas.set_window_title("Regrassions types compare")  # название окна
+p.Figure() # создание фигуры
+p.title("Сравнение типов регрессий") # заголовок графика
+p.gcf().canvas.set_window_title("Regrassions types compare") # название окна
 p.plot(y_real, label="real", color="r", alpha=0.7)  # график
 p.plot(y_predict, label="predict liner, mae:"+str(mae_linear)+", rmsle:"+str(rmsle_linear), color="b", alpha=0.7)  # график
 p.plot(y_predict_sgd, label="predict sgd, mae:"+str(mae_sgd)+", rmsle:"+str(rmsle_sgd), color="g", alpha=0.7)  # график
 p.ticklabel_format(useOffset=False)
 p.ticklabel_format(style='plain')
 p.legend(mode="expand", borderaxespad=0)
-p.show()  # отображение фигуры
+p.show() # отображение фигуры
 
 p.scatter(y_real, y_predict)
 p.xlabel("True Values")

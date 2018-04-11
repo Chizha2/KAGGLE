@@ -23,6 +23,7 @@ def to_categorial(train, test): # перевод категориальных ф
 
 
 # используется только в TEST.py:
+
 def NA_filter(file): # удаление лишних фич и замена "NA"
     for i in file.head(): # по фичам
         if int(file[i].notnull().sum() / len(file) * 100) < 80: # если > 80% "NA"
@@ -30,6 +31,7 @@ def NA_filter(file): # удаление лишних фич и замена "NA"
         else: # иначе
             file[i] = file[i].fillna(file[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
     return file # вернуть таблицу
+
 def graph_data(train): # получение данных для графика
     train = train.sort_values("SalePrice") # сортировка по цене
     price = list(train["SalePrice"]) # массив цен
@@ -77,7 +79,6 @@ def to_categorial(file): # перевод категориальных фич в
         file[i] = code.fit_transform(file[i])  # перевод
 
     return file # вернуть таблицу
-
 
 def rmsle(y, y_pred):
 	assert len(y) == len(y_pred)
