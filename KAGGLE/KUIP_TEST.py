@@ -34,6 +34,8 @@ x_train = x_scaler.transform(x_train) # преобразование обуча�
 y_train = y_scaler.transform(y_train) # преобразование обучающих результирующих данных
 x_test = x_scaler.transform(x_test) # преобразование тестовых входных данны
 
+y_test = list(y_test)
+
 model = linear_model.LinearRegression() # Создание модели линейной регрессии
 model.fit(x_train, y_train) # Обучение модели
 
@@ -44,19 +46,19 @@ modelsgd.fit(x_train, y_train) # Обучение модели
 print("Linear")
 
 y_predict = y_scaler.inverse_transform(model.predict(x_test)) # Предсказание для линейной модели и инвертирование трансформации
-y_predict = list(map(lambda x: x * (-1) if x < 0 else x, y_scaler.inverse_transform(y_predict))) # дешифровка предположений
+y_predict = list(map(lambda x: x * (-1) if x < 0 else x, y_predict)) # дешифровка предположений
 
 mae_linear=int(mean_absolute_error(y_test, y_predict)) # Расчёт MAE
-rmsle_linear = rmsle(list(y_test), y_predict) # Расчёт RMSLE
+rmsle_linear = rmsle(y_test, y_predict) # Расчёт RMSLE
 print(mae_linear) # вывод MAE
 print(rmsle_linear) # вывод RMSLE
 
 print("SGD")
 
 y_predict_sgd = y_scaler.inverse_transform(modelsgd.predict(x_test)) # Предсказание для SGD модели и инвертирование трансформации
-y_predict_sgd = list(map(lambda x: x * (-1) if x < 0 else x, y_scaler.inverse_transform(y_predict_sgd))) # дешифровка предположений
+y_predict_sgd = list(map(lambda x: x * (-1) if x < 0 else x, y_predict_sgd)) # дешифровка предположений
 mae_sgd=int(mean_absolute_error(y_test, y_predict_sgd)) # Расчёт MAE
-rmsle_sgd = rmsle(list(y_test), y_predict_sgd) # Расчёт RMSLE
+rmsle_sgd = rmsle(y_test, y_predict_sgd) # Расчёт RMSLE
 
 print(mae_sgd) # вывод MAE
 print(rmsle_sgd) # вывод RMSLE
