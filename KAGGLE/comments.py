@@ -79,3 +79,5 @@
 #    for i in file.select_dtypes(include=["object"]):  # по объектным фичам
 #        file[i] = code.fit_transform(file[i])  # перевод
 #    return file # вернуть таблицу
+
+# коммит
