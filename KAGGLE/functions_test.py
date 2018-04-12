@@ -1,3 +1,6 @@
+from libraries_main import * # импорт пакетов и модулей
+from libraries_test import *
+
 def graph_data(train): # получение данных для графика
     train = train.sort_values("SalePrice") # сортировка по цене
     price = list(train["SalePrice"]) # массив цен
