@@ -5,6 +5,7 @@ from sklearn.preprocessing import StandardScaler # скейлеры
 from sklearn import linear_model # модель
 import matplotlib.pyplot as p # графики
 import warnings # настройка предупреждений
+import os
 
 
 

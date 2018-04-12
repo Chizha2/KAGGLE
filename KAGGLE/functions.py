@@ -4,16 +4,16 @@ def NA_filter(train, test = None, y_name = "SalePrice"): # удаление ли
     for i in train.drop(columns = [y_name]).head(): # по фичам без SalePrice
         if int(train[i].notnull().sum() / len(train) * 100) < 80: # если > 80% "NA" в файле train
             del train[i] # удаление фичи
-            if test != None:
+            if test is not None:
                 del test[i] # удаление фичи
-        elif test != None and int(test[i].notnull().sum() / len(test) * 100) < 80 : # если > 80% "NA" в файле test
+        elif test is not None and int(test[i].notnull().sum() / len(test) * 100) < 80 : # если > 80% "NA" в файле test
             del train[i] # удаление фичи
             del test[i] # удаление фичи
         else: # иначе
             train[i] = train[i].fillna(train[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
-            if test != None:
+            if test is not None:
                 test[i] = test[i].fillna(test[i].value_counts().idxmax()) # замена всех "NA" фичи на самое популярное значение в ней
-    if(test != None):
+    if(test is not None):
         return train, test # вернуть таблицы
     
     return train # вернуть таблицы
@@ -22,9 +22,9 @@ def to_categorial(train, test = None): # перевод категориальн
     encoder = LabelEncoder()  # словарь для кодировки
     for i in train.select_dtypes(include = ["object"]):  # по объектным фичам
         train[i] = encoder.fit_transform(train[i]) # обучение и преобразование
-        if test != None:
+        if test is not None:
             test[i] = encoder.transform(test[i]) # преобразование
-    if(test != None):
+    if(test is not None):
         return train, test # вернуть таблицы
     
     return train # вернуть таблицы
