@@ -1,10 +1,11 @@
-from imports import * # импорт пакетов и модулей
-from functions import * # импорт функций
+from libraries_main import * # импорт пакетов и модулей
+from libraries_test import * # импорт пакетов и модулей
+from functions_main import * # импорт функций
 
 warnings.filterwarnings("ignore") # отключение предупреждений
 
 train = pd.read_csv("../zadanie/train.csv", na_values = "NA").drop(columns = ['Id']) # чтение train файла, пустые значения = "NA", удаление Id
-train = train.sample(frac = 1)
+train = train.sample(frac = 1) # перемешивание строк
 test = pd.read_csv("../zadanie/test.csv", na_values = "NA") # чтение test файла, пустые значения = "NA"
 result = pd.DataFrame() # таблица для результата
 result['Id'] = test['Id'] # копирование Id из test файла в result файл
@@ -36,10 +37,9 @@ while (answer != "yes"): # цикл проверки
     p.gcf().canvas.set_window_title("Предсказанные цены") # название окна
     p.plot(test_result) # график
     p.show() # отображение фигуры
-    print("Модель корректна?") # сообщение
-    answer = input() # ввод пользователя
+    answer = input("Модель корректна? ") # ввод пользователя
 
 test_result = list(map(lambda x: float(x), test_result)) # перевод предсказаний во float
 result['SalePrice'] = test_result # добавление в результат столбца с предсказанными ценами
-os.remove("./result.csv")
+os.remove("./result.csv") # удаление старого файла
 result.to_csv("./result.csv", header = True, index = False) # сохранение результата

@@ -1,5 +1,8 @@
-from imports import * # импорт пакетов и модулей
-from functions import * # импорт функций
+from libraries_main import * # импорт пакетов и модулей
+from libraries_test import * # импорт пакетов и модулей
+from functions_main import * # импорт функций
+from functions_test import *
+
 warnings.filterwarnings("ignore") # отключение предупреждений
 
 splitd = 2
