@@ -1,13 +1,11 @@
-from libraries_main import * # импорт пакетов и модулей
-from libraries_test import * # импорт пакетов и модулей
-from functions_main import * # импорт функций
+from module_main import * # импорт основного модуля
 
 warnings.filterwarnings("ignore") # отключение предупреждений
 
 train = pd.read_csv("../zadanie/train.csv", na_values = "NA").drop(columns = ['Id']) # чтение train файла, пустые значения = "NA", удаление Id
 train = train.sample(frac = 1) # перемешивание строк
 test = pd.read_csv("../zadanie/test.csv", na_values = "NA") # чтение test файла, пустые значения = "NA"
-result = pd.DataFrame() # таблица для результата
+result = pd.DataFrame() # создание таблицы для результата
 result['Id'] = test['Id'] # копирование Id из test файла в result файл
 test = test.drop(columns = ['Id']) # удаление Id из test файла
 
@@ -42,4 +40,4 @@ while (answer != "yes"): # цикл проверки
 test_result = list(map(lambda x: float(x), test_result)) # перевод предсказаний во float
 result['SalePrice'] = test_result # добавление в результат столбца с предсказанными ценами
 os.remove("./result.csv") # удаление старого файла
-result.to_csv("./result.csv", header = True, index = False) # сохранение результата
+result.to_csv("./result.csv", header = True, index = False) # сохранение результата в текущую папку с заголовками и без Id

@@ -1,7 +1,5 @@
-from libraries_main import * # импорт пакетов и модулей
-from libraries_test import * # импорт пакетов и модулей
-from functions_main import * # импорт функций
-from functions_test import *
+from module_main import * # импорт основного модуля
+from module_test import * # импорт тестового модуля
 
 warnings.filterwarnings("ignore") # отключение предупреждений
 
@@ -10,8 +8,6 @@ splitd = 2
 file = pd.read_csv("../zadanie/kuip_train.csv", na_values = "NA") # чтение файла, пустые значения = "NA", kuip
 
 file = NA_filter(file, y_name = "LUX") # удаление лишних фич и замена "NA"
-# result, price = graph_data(file) получение данных для графика
-# graph_print(result, price) вывод графика
 file = to_categorial(file) # перевод категориальных фич в числовые
 
 

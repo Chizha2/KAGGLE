@@ -1,5 +1,4 @@
-from libraries_main import * # импорт пакетов и модулей
-from libraries_test import *
+from libraries_main import * # импорт основных библиотек
 
 def NA_filter(train, test = None, y_name = "SalePrice"): # удаление лишних фич и замена "NA"
     for i in train.drop(columns = [y_name]).head(): # по фичам без SalePrice

@@ -55,8 +55,8 @@
 #             continue
 #         p = np.log(predicted[x] + 1)
 #         r = np.log(real[x] + 1)
-#         sum = sum + (p - r)**2
-#     return (sum / len(predicted))**0.5
+#         sum = sum + (p - r) ** 2
+#     return (sum / len(predicted)) ** 0.5
 
 # predictions = y_scaler.inverse_transform(predictions) дешифровка предположений
 # rmsle_k += rmsle_old(y_test, predictions) rmsle
@@ -76,8 +76,66 @@
 
 # def to_categorial(file): # перевод категориальных фич в числовые
 #    code = LabelEncoder()  # словарь для кодировки
-#    for i in file.select_dtypes(include=["object"]):  # по объектным фичам
+#    for i in file.select_dtypes(include = ["object"]):  # по объектным фичам
 #        file[i] = code.fit_transform(file[i])  # перевод
 #    return file # вернуть таблицу
 
 # коммит
+
+# def graph_print(result, price_2): # вывод графика
+#     p.Figure() # создание фигуры
+#     p.title("Площадь / цена") # заголовок графика
+#     p.gcf().canvas.set_window_title("Площадь / цена") # название окна
+#     p.plot(price_2, result, label = "Соотношение", color = "r") # график
+#     p.show() # отображение фигуры
+
+# def graph_print2(real, predict): вывод графика
+#     p.Figure() создание фигуры
+#     p.title("Цена / площадь") заголовок графика
+#     p.gcf().canvas.set_window_title("Цена / площадь") название окна
+#     p.plot(real, label = "real", color = "r", alpha = 0.7) график
+#     p.plot(predict, label = "predict", color = "b", alpha = 0.7) график
+#     p.ticklabel_format(useOffset = False) настройка графика
+#     p.ticklabel_format(style = "plain") настройка графика
+#     p.legend(mode = "expand", borderaxespad = 0) настройка графика
+#     p.show() отображение фигуры
+
+# def graph_data(train): получение данных для графика
+#     train = train.sort_values("SalePrice") сортировка по цене
+#     price = list(train["SalePrice"]) массив цен
+#     square = list(train["GrLivArea"]) массив площадей
+#     result = [] результирующий массив
+#     k = 0 счетчик 1
+#     f = 0 счетчик 2
+#     for i in range(len(price)): по строкам
+#         k += 1 увеличение счетчика
+#         f += square[i] / price[i] занесение результата
+#         if k % 10 == 0: условие усреднения
+#             result.append(f / 10) добавление результата
+#             f = 0 обнуление счетчика
+#     k = 0 обнуление счетчика
+#     price_2 = [] пустой список для цен
+#     for i in range(len(price)): по строкам
+#         k += 1 увеличить счетчик
+#         f += price[i] изменение промежуточного значения
+#         if k % 10 == 0: каждые 10 элементов
+#             price_2.append(f / 10) поместить в результат
+#             f = 0 обнулить
+#     return result, price_2 вернуть данные для графика
+
+# result, price = graph_data(file) получение данных для графика
+# graph_print(result, price) вывод графика
+
+# result, price = graph_data(file) # получение данных для графика
+# graph_print(result, price) # вывод графика
+
+#    if(splitd == 1): # в случае выбора метода разделения train_test_split
+#        x_train, x_test, y_train, y_test = train_test_split(file.drop(columns = [y_col_name]), file[y_col_name], test_size = 0.2) # разделение на 4 части (2 тестовых и 2 валидационных)
+#    if(splitd == 2): # в случае выбора разделение попалам
+#        splint_cof = int(len(file) / 2) # расчёт и округление половины строк
+#        x_train = file.head(splint_cof) # отделение 1 части от массива, с начала
+#        x_test = file.tail(len(file)-splint_cof) # отделение 2 части, с конца
+#        y_train = x_train[y_col_name] # отделение y части
+#        y_test = x_test[y_col_name] # отделение y части
+#        x_train = x_train.drop(columns = [y_col_name]) # оставляем только x части
+#        x_test = x_test.drop(columns = [y_col_name]) # оставляем только x части

@@ -1,7 +1,5 @@
-from libraries_main import * # импорт пакетов и модулей
-from libraries_test import * # импорт пакетов и модулей
-from functions_main import * # импорт функций
-from functions_test import *
+from module_main import * # импорт основного модуля
+from module_test import * # импорт тестового модуля
 
 warnings.filterwarnings("ignore") # отключение предупреждений
 
@@ -30,8 +28,6 @@ else: # иначе
     random = False # присвоить False
 
 file = NA_filter(file, y_name = y_col_name) # удаление лишних фич и замена "NA"
-# result, price = graph_data(file) # получение данных для графика
-# graph_print(result, price) # вывод графика
 code = LabelEncoder() # словарь для кодировки
 file = to_categorial(file) # перевод категориальных фич в числовые
 
@@ -45,17 +41,6 @@ for j in range(100): # цикл
     model = linear_model.LinearRegression() # создание модели
   
     options_1, options_2, result_1, result_2 = train_test_split(file.drop(columns = [y_col_name]), file[y_col_name], test_size = proportion, shuffle = random) # разделение на 4 части
-
-#    if(splitd == 1): # в случае выбора метода разделения train_test_split
-#        x_train, x_test, y_train, y_test = train_test_split(file.drop(columns = [y_col_name]), file[y_col_name], test_size = 0.2) # разделение на 4 части (2 тестовых и 2 валидационных)
-#    if(splitd == 2): # в случае выбора разделение попалам
-#        splint_cof = int(len(file)/2) # расчёт и округление половины строк
-#        x_train = file.head(splint_cof) # отделение 1 части от массива, с начала
-#        x_test = file.tail(len(file)-splint_cof) # отделение 2 части, с конца
-#        y_train = x_train[y_col_name] # отделение y части
-#        y_test = x_test[y_col_name] # отделение y части
-#        x_train = x_train.drop(columns = [y_col_name]) # оставляем только x части
-#        x_test = x_test.drop(columns = [y_col_name]) # оставляем только x части
     
     result_1 = result_1.reshape(-1, 1) # фикс
     result_2 = list(result_2) # перевод в список
