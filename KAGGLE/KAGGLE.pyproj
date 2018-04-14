@@ -33,7 +33,7 @@
     <Compile Include="libraries_main.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="KUIP_TEST.py" />
+    <Compile Include="TEST_DEBUG.py" />
     <Compile Include="libraries_test.py">
       <SubType>Code</SubType>
     </Compile>
