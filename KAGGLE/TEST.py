@@ -8,7 +8,7 @@ data_code = int(input("Выберите набор данных: ")) # Выбо�
 print() # перевод строки
 
 if(data_code == 1): # в случае выбора набора KAGGLE
-    file = pd.read_csv("../zadanie/train.csv", na_values = "NA") # чтение файла, пустые значения = "NA", kaggle
+    file = pd.read_csv("../zadanie/train.csv", na_values = "NA").drop(columns = ['Id']) # чтение файла, пустые значения = "NA", kaggle
     y_col_name = 'SalePrice' # Указания имени столбца для y части
 elif(data_code == 2): # в случае выбора набора KUIP
     file = pd.read_csv("../zadanie/kuip_train.csv", na_values = "NA") # чтение файла, пустые значения = "NA", kuip
@@ -40,7 +40,7 @@ errors = 0 # ошибки
 for j in range(100): # цикл
     model = linear_model.LinearRegression() # создание модели
   
-    options_1, options_2, result_1, result_2 = train_test_split(file.drop(columns = [y_col_name]), file[y_col_name], test_size = proportion, shuffle = random) # разделение на 4 части
+    options_1, options_2, result_1, result_2 = train_test_split(file.drop(columns = [y_col_name]), file[y_col_name], train_size = proportion, shuffle = random) # разделение на 4 части
     
     result_1 = result_1.reshape(-1, 1) # фикс
     result_2 = list(result_2) # перевод в список
