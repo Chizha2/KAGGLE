@@ -3,7 +3,7 @@ from module_test import * # импорт тестового модуля
 
 warnings.filterwarnings("ignore") # отключение предупреждений
 
-splitd = 2
+
 
 file = pd.read_csv("../zadanie/kuip_train.csv", na_values = "NA") # чтение файла, пустые значения = "NA", kuip
 
@@ -11,18 +11,7 @@ file = NA_filter(file, y_name = "LUX") # удаление лишних фич и
 file = to_categorial(file) # перевод категориальных фич в числовые
 
 
-if(splitd == 1):
-    x_train, x_test, y_train, y_test = train_test_split(file.drop(columns = ["LUX"]), file["LUX"], test_size = 0.4) # разделение на 4 части (2 тестовых и 2 валидационных), kuip
-
-if(splitd == 2):
-    splint_cof = int(len(file) / 2) # расчёт и округление половины строк
-    x_train = file.head(splint_cof) # отделение 1 части от массива, с начала
-    x_test = file.tail(len(file) - splint_cof) # отделение 2 части, с конца
-    y_train = x_train["LUX"] # отделение y части
-    y_test = x_test["LUX"] # отделение y части
-    x_train = x_train.drop(columns = ["LUX"]) # оставляем только x части
-    x_test = x_test.drop(columns = ["LUX"]) # оставляем только x части
-    
+x_train, x_test, y_train, y_test = train_test_split(file.drop(columns = ["LUX"]), file["LUX"], test_size = 0.4) # разделение на 4 части (2 тестовых и 2 валидационных), kuip
 
 y_train = y_train.reshape(-1, 1) # фикс
 
