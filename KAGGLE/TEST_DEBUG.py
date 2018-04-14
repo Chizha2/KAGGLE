@@ -5,7 +5,7 @@ warnings.filterwarnings("ignore") # отключение предупрежде�
 
 
 
-file = pd.read_csv("../zadanie/kuip_train.csv", na_values = "NA").drop(columns = ['Id']) # чтение файла, пустые значения = "NA", kuip
+file = pd.read_csv("../zadanie/kuip_train.csv", na_values = "NA").drop(columns = ['UNIXTIME']) # чтение файла, пустые значения = "NA", kuip
 
 file = NA_filter(file, y_name = "LUX") # удаление лишних фич и замена "NA"
 file = to_categorial(file) # перевод категориальных фич в числовые
