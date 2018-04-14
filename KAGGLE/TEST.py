@@ -11,7 +11,7 @@ if(data_code == 1): # в случае выбора набора KAGGLE
     file = pd.read_csv("../zadanie/train.csv", na_values = "NA").drop(columns = ['Id']) # чтение файла, пустые значения = "NA", kaggle
     y_col_name = 'SalePrice' # Указания имени столбца для y части
 elif(data_code == 2): # в случае выбора набора KUIP
-    file = pd.read_csv("../zadanie/kuip_train.csv", na_values = "NA") # чтение файла, пустые значения = "NA", kuip
+    file = pd.read_csv("../zadanie/kuip_train.csv", na_values = "NA").drop(columns = ['UNIXTIME']) # чтение файла, пустые значения = "NA", kuip
     y_col_name = 'LUX' # Указания имени столбца для y части
 else: # иначе
     exit() # в остальных случаях
